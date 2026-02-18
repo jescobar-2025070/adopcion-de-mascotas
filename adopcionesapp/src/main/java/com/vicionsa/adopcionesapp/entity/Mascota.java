@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "mascota")
@@ -16,18 +20,25 @@ public class Mascota {
     @Column(name = "id_mascota")
     private Integer idMascota;
 
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     @Column(name = "nombre_mascota", nullable = false, length = 100)
     private String nombreMascota;
 
+    @NotBlank(message = "La especie es obligatoria")
     @Column(name = "especie", nullable = false, length = 50)
     private String especie;
 
+    @NotBlank(message = "La raza es obligatoria")
     @Column(name = "raza", length = 100)
     private String raza;
 
+    @Min(value = 0, message = "La edad no puede ser negativa")
+    @Max(value = 30, message = "Edad inválida")
     @Column(name = "edad")
     private Integer edad;
 
+    @NotBlank(message = "El estado es obligatorio")
     @Column(name = "estado", nullable = false, length = 20)
     private String estado;
 

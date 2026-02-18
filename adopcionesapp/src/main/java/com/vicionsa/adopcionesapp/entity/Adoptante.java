@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "Adoptante")
@@ -16,15 +19,21 @@ public class Adoptante {
     @Column(name = "id_adoptante")
     private Integer idAdoptante;
 
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(name = "nombre_adoptante", nullable = false, length = 150)
     private String nombreAdoptante;
 
+    @Email(message = "Correo inválido")
+    @NotBlank(message = "El correo es obligatorio")
     @Column(name = "correo", nullable = false, length = 150)
     private String correo;
 
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Pattern(regexp = "\\d{8}", message = "El teléfono debe tener 8 dígitos")
     @Column(name = "telefono", length = 20)
     private String telefono;
 
+    @NotBlank(message = "La dirección es obligatoria")
     @Column(name = "direccion", columnDefinition = "TEXT")
     private String direccion;
 

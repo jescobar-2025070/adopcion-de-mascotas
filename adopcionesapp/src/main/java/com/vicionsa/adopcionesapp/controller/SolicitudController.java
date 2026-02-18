@@ -6,6 +6,7 @@ import com.vicionsa.adopcionesapp.entity.Adoptante;
 import com.vicionsa.adopcionesapp.repository.SolicitudRepository;
 import com.vicionsa.adopcionesapp.repository.MascotaRepository;
 import com.vicionsa.adopcionesapp.repository.AdoptanteRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/solicitudes")
-@CrossOrigin
 public class SolicitudController {
 
     private final SolicitudRepository solicitudRepo;
@@ -39,7 +39,7 @@ public class SolicitudController {
     }
 
     @PostMapping
-    public Solicitud guardar(@RequestBody Solicitud solicitud) {
+    public Solicitud guardar(@Valid @RequestBody Solicitud solicitud) {
 
         Mascota mascota = mascotaRepo.findById(
                 solicitud.getMascota().getIdMascota()
@@ -57,7 +57,7 @@ public class SolicitudController {
 
     @PutMapping("/{id}")
     public Solicitud actualizar(@PathVariable Integer id,
-                                @RequestBody Solicitud solicitudActualizada) {
+                                @Valid @RequestBody Solicitud solicitudActualizada) {
 
         Optional<Solicitud> existente = solicitudRepo.findById(id);
 
@@ -68,12 +68,10 @@ public class SolicitudController {
             solicitud.setFecha(solicitudActualizada.getFecha());
             solicitud.setEstadoSolicitud(solicitudActualizada.getEstadoSolicitud());
 
-            // 🔎 Buscar mascota real
             Mascota mascota = mascotaRepo.findById(
                     solicitudActualizada.getMascota().getIdMascota()
             ).orElseThrow(() -> new RuntimeException("Mascota no encontrada"));
 
-            // 🔎 Buscar adoptante real
             Adoptante adoptante = adoptanteRepo.findById(
                     solicitudActualizada.getAdoptante().getIdAdoptante()
             ).orElseThrow(() -> new RuntimeException("Adoptante no encontrado"));
@@ -84,7 +82,7 @@ public class SolicitudController {
             return solicitudRepo.save(solicitud);
         }
 
-        return null;
+        throw new RuntimeException("Solicitud no encontrada");
     }
 
     @DeleteMapping("/{id}")

@@ -2,6 +2,7 @@ package com.vicionsa.adopcionesapp.controller;
 
 import com.vicionsa.adopcionesapp.entity.Mascota;
 import com.vicionsa.adopcionesapp.repository.MascotaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/mascotas")
-@CrossOrigin
 public class MascotaController {
 
     @Autowired
@@ -28,13 +28,13 @@ public class MascotaController {
     }
 
     @PostMapping
-    public Mascota guardarMascota(@RequestBody Mascota mascota) {
+    public Mascota guardarMascota(@Valid @RequestBody Mascota mascota) {
         return mascotaRepository.save(mascota);
     }
 
     @PutMapping("/{id}")
     public Mascota actualizarMascota(@PathVariable Integer id,
-                                     @RequestBody Mascota mascotaActualizada) {
+                                     @Valid @RequestBody Mascota mascotaActualizada) {
 
         Optional<Mascota> mascotaExistente = mascotaRepository.findById(id);
 

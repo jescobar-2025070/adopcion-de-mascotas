@@ -2,6 +2,7 @@ package com.vicionsa.adopcionesapp.controller;
 
 import com.vicionsa.adopcionesapp.entity.Adoptante;
 import com.vicionsa.adopcionesapp.repository.AdoptanteRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/adoptantes")
-@CrossOrigin
 public class AdoptanteController {
 
     private final AdoptanteRepository repo;
@@ -30,13 +30,13 @@ public class AdoptanteController {
     }
 
     @PostMapping
-    public Adoptante guardar(@RequestBody Adoptante adoptante){
+    public Adoptante guardar(@Valid @RequestBody Adoptante adoptante){
         return repo.save(adoptante);
     }
 
     @PutMapping("/{id}")
     public Adoptante actualizar(@PathVariable Integer id,
-                                @RequestBody Adoptante adoptanteActualizado){
+                                @Valid @RequestBody Adoptante adoptanteActualizado){
 
         Optional<Adoptante> existente = repo.findById(id);
 

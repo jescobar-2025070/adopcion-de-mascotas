@@ -1,6 +1,8 @@
 package com.vicionsa.adopcionesapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -13,33 +15,33 @@ public class Solicitud {
     @Column(name = "id_solicitud")
     private Integer idSolicitud;
 
+    @NotNull(message = "La fecha es obligatoria")
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
+    @NotBlank(message = "El estado de la solicitud es obligatorio")
     @Column(name = "estado_solicitud", nullable = false, length = 20)
     private String estadoSolicitud;
 
+    @NotNull(message = "Debe seleccionar una mascota")
     @ManyToOne
     @JoinColumn(name = "id_mascota", nullable = false)
     private Mascota mascota;
 
+    @NotNull(message = "Debe seleccionar un adoptante")
     @ManyToOne
     @JoinColumn(name = "id_adoptante", nullable = false)
     private Adoptante adoptante;
 
-    // Constructor vacío obligatorio
     public Solicitud() {
     }
 
-    // Constructor con parámetros
     public Solicitud(LocalDate fecha, String estadoSolicitud, Mascota mascota, Adoptante adoptante) {
         this.fecha = fecha;
         this.estadoSolicitud = estadoSolicitud;
         this.mascota = mascota;
         this.adoptante = adoptante;
     }
-
-    // Getters y Setters
 
     public Integer getIdSolicitud() {
         return idSolicitud;
