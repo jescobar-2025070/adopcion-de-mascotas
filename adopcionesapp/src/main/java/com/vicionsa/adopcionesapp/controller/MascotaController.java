@@ -63,4 +63,17 @@ public class MascotaController {
 
         return "La mascota no existe";
     }
+
+    @GetMapping("/raza/{raza}")
+    public List<Mascota> buscarRaza(@PathVariable String raza){
+        return mascotaRepository.findByRaza(raza);
+    }
+
+
+    @GetMapping("/edad/{edad}")
+    public List<Mascota> buscarEdad(@PathVariable int edad){
+        return mascotaRepository.findByEdad(edad);
+    }
+
+
 }
