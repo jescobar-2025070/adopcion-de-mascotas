@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/mascotas")
-@CrossOrigin
 public class MascotaController {
 
     private final MascotaRepository mascotaRepository;
