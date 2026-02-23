@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
+@Table(name = "refugios")
 public class Refugio {
 
     @Id

@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "adoptante")
+@Table(name = "adoptantes")
 public class Adoptante {
 
     @Id
